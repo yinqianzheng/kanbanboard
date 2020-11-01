@@ -7,7 +7,7 @@ const Auth = ({ component: Component, path, loggedIn, exact }) => (
         if (!loggedIn) { 
             return <Component {...props} />;
         } else { 
-            return <Redirect to="/kanbanboard" />;
+            return <Redirect to="/home" />;
         }
     }} />
 );

@@ -4,6 +4,7 @@ const http = require("http").createServer(app);
 
 const mongoose = require("mongoose");
 const users = require("./routes/users");
+const candidates = require("./routes/candidates");
 const bodyParser = require("body-parser");
 
 const port = process.env.PORT || 5000;
@@ -32,5 +33,6 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/users", users);
+app.use("/candidates", candidates);
 
 http.listen(port, () => console.log(`Listening on port ${port}`));

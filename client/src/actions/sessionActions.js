@@ -57,7 +57,7 @@ export const login = user => dispatch =>
       APIUtil.setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(receiveCurrentUser(decoded));
-      window.location.hash = "/kanbanboard";
+      window.location.hash = "/home";
     })
     .catch(err => {
       dispatch(receiveErrors(err));

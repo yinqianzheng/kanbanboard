@@ -2,7 +2,7 @@ import React from "react";
 import "./dndDropBox.css"
 import Draggable from "./dndDraggable";
 
-export default function DndDropBox({title, items}){
+export default function DndDropBox({title, items, afterDrop}){
     const allowDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -13,15 +13,17 @@ export default function DndDropBox({title, items}){
         e.stopPropagation();
         var data = e.dataTransfer.getData("text"); 
         const selectedEle = document.getElementById(data);
-        window.e = e.target;
-        if(e.target.classList.contains("dnd-drop-container")){
-            e.target.appendChild(selectedEle);
-        }else{
-            let target = e.target;
-            while(!target.draggable){
-                target = target.parentNode;
+        if(selectedEle && selectedEle.draggable){
+            if(e.target.classList.contains("dnd-drop-container")){
+                e.target.appendChild(selectedEle);
+            }else{
+                let target = e.target;
+                while(!target.draggable){
+                    target = target.parentNode;
+                }
+                target.parentNode.insertBefore(selectedEle, target); 
             }
-            target.parentNode.insertBefore(selectedEle, target); 
+            afterDrop && afterDrop(title, selectedEle.id);
         }
     }
 

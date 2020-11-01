@@ -1,6 +1,9 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { addCandidate } from "../../actions/candidateActions";
+import { clearErrors } from "../../actions/sessionActions"
 
-export default class SessionForm extends React.Component {
+class CandidateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,10 +26,10 @@ export default class SessionForm extends React.Component {
   }
 
   handleAddCandidate(e) {
-    let { email, password } = this.state;
+    let { email, name, phoneNum, resume} = this.state;
     e.preventDefault();
     this.props.clearErrors();
-    this.props.submitForm({ email, password });
+    this.props.addCandidate({ email, name, phoneNum, resume });
   }
 
   showErrors() {
@@ -77,10 +80,18 @@ export default class SessionForm extends React.Component {
           </div>
           <div className="session-button">
             <button className="submit-button" onClick={this.handleAddCandidate}>
-              {this.props.type}
+              Add
             </button>
           </div>
       </div>
     );
   }
 }
+
+
+const mDTP = dispatch => ({
+    addCandidate: user => dispatch(addCandidate(user)),
+    clearErrors: () => dispatch(clearErrors())
+});
+
+export default connect(null, mDTP)(CandidateForm)
