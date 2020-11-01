@@ -1,0 +1,6 @@
+.dnd-drop-container{
+    min-width: 200px;
+    text-align: center;
+    min-height: 400px;
+    border: 1px solid black;
+}

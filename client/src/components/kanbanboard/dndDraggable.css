@@ -1,0 +1,5 @@
+.dnd-draggable {
+  border: 1px solid black;
+  width: 100%;
+  min-height: 50px;
+}
