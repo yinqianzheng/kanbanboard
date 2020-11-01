@@ -25,12 +25,55 @@ class CandidateForm extends React.Component {
     return e => this.setState({ [field]: e.currentTarget.value });
   }
 
+  onFileChange = e => {   
+    if( e.target.files.length){
+      this.setState({ resume: e.target.files[0] }); 
+    }   
+  }; 
+
+  fileData = () => { 
+    if (this.state.resume) { 
+      return ( 
+        <div> 
+          <h4>Resume Details:</h4> 
+          <p>File Name: {this.state.resume.name}</p> 
+          <p> 
+            Last Modified:{" "} 
+            {this.state.resume.lastModifiedDate.toDateString()} 
+          </p> 
+        </div> 
+      ); 
+    } else { 
+      return ( 
+        <div> 
+          Please upload the resume!
+        </div> 
+      ); 
+    } 
+  }; 
+
   handleAddCandidate(e) {
-    let { email, name, phoneNum, resume} = this.state;
     e.preventDefault();
+
+    const formData = new FormData(); 
+    const { email, name, phoneNum, resume} = this.state;
+    formData.append("resume", resume); 
+    formData.append("email", email); 
+    formData.append("name", name); 
+    formData.append("phoneNum", phoneNum); 
+  
     this.props.clearErrors();
-    this.props.addCandidate({ email, name, phoneNum, resume });
+    this.props.addCandidate(formData);
   }
+
+  // handleAddCandidate(e) {
+  //   let { email, name, phoneNum, resume} = this.state;
+  //   e.preventDefault();
+  //   this.props.clearErrors();
+  //   this.props.addCandidate({ email, name, phoneNum, resume });
+  // }
+
+
 
   showErrors() {
     if (this.props.errors.message) {
@@ -78,6 +121,13 @@ class CandidateForm extends React.Component {
               />
             </label>
           </div>
+          <div> 
+            <label>
+              Resume:
+              <input type="file" onChange={this.onFileChange} /> 
+            </label>
+          </div> 
+          {this.fileData()} 
           <div className="session-button">
             <button className="submit-button" onClick={this.handleAddCandidate}>
               Add

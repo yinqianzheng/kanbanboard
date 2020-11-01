@@ -55,7 +55,7 @@ function InfoBox({info, email, update}){
                 <div><label>Name: {info.name}</label></div>
                 <div><label>email: {info.email}</label></div>
                 <div><label>Phone Number: {info.phoneNum}</label></div>
-                <div><a target="_blank" rel="noopener noreferrer" href={info.resume}>Resume</a></div>
+                <div><a target="_blank" rel="noreferrer" href={info.resume}>Resume</a></div>
                 <div><label>Average Rating: {`${rating} (${info.rating.length} votes)`}</label></div>
                 <div><StarRating rate={rating} updateRating={handleRating} /></div>
                 

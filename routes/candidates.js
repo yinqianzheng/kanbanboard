@@ -1,36 +1,41 @@
 const router = require("express").Router();
 const Candidate = require("../models/Candidate");
+const fileupload = require("express-fileupload");
+const fs = require('fs');
+const path = require("path");
+const rimraf = require("rimraf");
+const uploadFile = require("../utils/uploadFile");
 
-let keys;
-if (process.env.NODE_ENV === "production") {
-  keys = require("../config/prodKeys");
-} else {
-  keys = require("../config/keys");
-}
+router.post("/add", fileupload(), (req, res) => {
+    const errors = {};
+    const {name, email, phoneNum} = req.body;
+    
 
-router.post("/add", (req, res) => {
     Candidate.findOne({ email: req.body.email }).then(candidate => {
       const errors = {};
       if (candidate) {
         errors.email = "Email already exists";
         return res.status(401).json(errors);
       } else {
-          // upload resume
-        const {name, email, phoneNum} = req.body;
-        const newCandidate = new Candidate({
-            name,
-            email,
-            phoneNum,
-            resume: "https://www.youtube.com"
-        });
-        newCandidate
-            .save()
-            .then(candidate => {
-                res.json(candidate);
-            }).catch(err => {
-                errors.internal = "Failed to add a new candidate, Please try later!";
-                res.status(444).json(errors);
-            });
+        // upload resume
+        if(req.files && req.files.resume){
+          const file = req.files.resume;
+          uploadFile(email, file, (fileUrl) => {
+            if(!fileUrl){
+              return res.status(444).json({uploadResume: "Failed to add a new candidate, Please try later!"});
+            }
+            const newCandidate = new Candidate({name,email,phoneNum,resume: fileUrl});
+            newCandidate
+                .save()
+                .then(candidate => {
+                  return res.json(candidate);
+                }).catch(err => {
+                    errors.internal = "Failed to add a new candidate, Please try later!";
+                    return res.status(444).json(errors);
+                });
+            
+          })
+        }
       }
     });
 });
@@ -99,7 +104,7 @@ router.post("/update/:id",(req, res) => {
         }
       }).catch(err => {
         errors.internal = "Unable to update now!";
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
       });
     }
   }
