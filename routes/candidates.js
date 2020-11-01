@@ -47,22 +47,61 @@ router.get("/fetch", (req, res) => {
 
 router.post("/update/:id",(req, res) => {
     const errors = {};
-    const newInfo = { process: req.body.process };
-    Candidate.findOneAndUpdate({ _id: req.params.id }, newInfo, {
-      upsert: true,
-      new: true,
-      runValidators: true
-    }).then(candidate => {
-      if (!candidate) {
-        errors.candidate = "Candidate doesn't exist";
-        return res.status(400).json(errors);
-      } else {
-        return res.status(200).json(candidate);
-      }
-    }).catch(err => {
-      errors.internal = "Unable to update now!";
-      res.status(404).json(errors);
-    });
+    const newInfo = {};
+    let type = "process";
+    if(req.body.process){
+      newInfo.process = req.body.process;
+    }
+    if(req.body.rating){
+      type = "rating";
+    }
+    if(req.body.comment){
+      type = "comment"
+      newInfo.comments = [req.body.comment]
+    }
+
+    if(type == "rating"){
+      Candidate.findOne({ _id: req.params.id }).then(candidate => {
+        if(!candidate){
+          errors.rating = "Unable to update right now";
+          return res.status(401).json(errors);
+        }
+        const ratings = candidate.rating;
+        let updated = false;
+        for(let i = 0; i < ratings.length; i++){
+          if(ratings[i].provider == req.body.rating[0].provider){
+            ratings[i].value = req.body.rating[0].value;
+            updated = true;
+            break;
+          }
+        }
+        if(!updated){
+          ratings.push(...req.body.rating);
+        }
+        candidate.save().then(c =>{
+          res.json({type, candidate:c});
+        }).catch(err => {
+          errors.internal = "Unable to update right now";
+          res.status(444).json(errors);
+        });
+      })
+    }else{
+      Candidate.findOneAndUpdate({ _id: req.params.id }, {$addToSet: newInfo}, {
+        upsert: true,
+        new: true,
+        runValidators: true
+      }).then(candidate => {
+        if (!candidate) {
+          errors.candidate = "Candidate doesn't exist";
+          return res.status(400).json(errors);
+        } else {
+          return res.status(200).json({type, candidate});
+        }
+      }).catch(err => {
+        errors.internal = "Unable to update now!";
+        res.status(404).json(errors);
+      });
+    }
   }
 );
 

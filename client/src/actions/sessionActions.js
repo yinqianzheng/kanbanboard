@@ -1,5 +1,6 @@
 import * as APIUtil from "../utils/session";
 import jwt_decode from "jwt-decode";
+import {closeModal} from "./modalActions"
 
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
@@ -43,6 +44,7 @@ export const addUser = user => dispatch =>
       const { success, email } = res.data;
       if(success){
         console.log(email, "new user added");
+        dispatch(closeModal());
       }
     })
     .catch(err => {

@@ -2,3 +2,25 @@
   text-align: left;
   padding: 5px;
 }
+
+.candidate-detail {
+  min-width: 400px;
+  min-height: 150px;
+}
+
+.comment-content {
+  margin-bottom: 30px;
+  max-height: 500px;
+  overflow: scroll;
+}
+
+.detail-container {
+  max-height: 600px;
+  overflow: scroll;
+}
+
+.comment-list {
+  list-style-type: none;
+  margin-top: 5px;
+  padding-left: 10px;
+}

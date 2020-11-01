@@ -1,6 +1,6 @@
 import * as APIUtil from "../utils/candidate";
 import {receiveErrors} from "./sessionActions"
-
+import {closeModal} from "./modalActions"
 export const RECEIVE_CANDIDATE = "RECEIVE_CANDIDATE";
 export const RECEIVE_ALL_CANDIDATE = "RECEIVE_ALL_CANDIDATE";
 
@@ -17,6 +17,7 @@ export const receiveAllCandidate = candidates => ({
 export const addCandidate = candidate => dispatch => {
     APIUtil.addCandidate(candidate).then(res =>{
         dispatch(receiveCandidate(res.data));
+        dispatch(closeModal());
     }).catch(err =>{
         dispatch(receiveErrors(err))
     })
@@ -32,7 +33,9 @@ export const fetchCandidates = () => dispatch => {
 
 export const updateCandidate = (id, info) => dispatch => {
     APIUtil.updateCandidate(id, info).then(res => {
-        // dispatch(receiveCandidate(res.data));
+        if(res.data.type === "rating" || res.data.type === "comment"){
+            dispatch(receiveCandidate(res.data.candidate));
+        }
     }).catch(err =>{
         dispatch(receiveErrors(err))
     })

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { addUser, clearErrors } from "../../actions/sessionActions";
+
 import SessionForm from "./sessionForm";
 
 const mSTP = state => ({
