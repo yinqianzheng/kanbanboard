@@ -53,7 +53,7 @@ router.post("/fetch", (req, res) => {
 
 router.post("/update/:id",(req, res) => {
     const errors = {};
-    const newInfo = {};
+    let newInfo = {};
     let type = "process";
     if(req.body.process){
       newInfo.process = req.body.process;
@@ -92,7 +92,10 @@ router.post("/update/:id",(req, res) => {
         });
       })
     }else{
-      Candidate.findOneAndUpdate({ _id: req.params.id }, {$addToSet: newInfo}, {
+      if(type == "comment"){
+        newInfo = {$addToSet: newInfo};
+      }
+      Candidate.findOneAndUpdate({ _id: req.params.id }, newInfo, {
         upsert: true,
         new: true,
         runValidators: true

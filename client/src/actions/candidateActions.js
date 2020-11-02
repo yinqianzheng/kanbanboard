@@ -33,9 +33,9 @@ export const getCandidates = () => dispatch => {
 
 export const updateCandidate = (id, info) => dispatch => {
     APIUtil.updateCandidate(id, info).then(res => {
-        if(res.data.type === "rating" || res.data.type === "comment"){
+        // if(res.data.type === "rating" || res.data.type === "comment"){
             dispatch(receiveCandidate(res.data.candidate));
-        }
+        // }
     }).catch(err =>{
         dispatch(receiveErrors(err))
     })

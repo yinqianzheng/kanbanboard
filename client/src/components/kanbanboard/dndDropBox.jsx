@@ -13,15 +13,19 @@ export default function DndDropBox({title, items, afterDrop}){
         e.stopPropagation();
         var data = e.dataTransfer.getData("text"); 
         const selectedEle = document.getElementById(data);
+        const copy = selectedEle.cloneNode(true);
+        copy.innerHTML = "";
         if(selectedEle && selectedEle.draggable){
             if(e.target.classList.contains("dnd-drop-container")){
-                e.target.appendChild(selectedEle);
+                e.target.appendChild(copy);
+                copy.remove();
             }else{
                 let target = e.target;
                 while(!target.draggable){
                     target = target.parentNode;
                 }
-                target.parentNode.insertBefore(selectedEle, target); 
+                target.parentNode.insertBefore(copy, target);
+                copy.remove();
             }
             afterDrop && afterDrop(title, selectedEle.id);
         }
