@@ -5,7 +5,7 @@ export const addCandidate = candidateData => {
 };
 
 export const fetchCandidates = () => {
-  return axios.get("/candidates/fetch");
+  return axios.post("/candidates/fetch");
 }
 
 export const updateCandidate = (id, candidateInfo) => {
