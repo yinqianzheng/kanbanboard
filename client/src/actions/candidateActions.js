@@ -16,7 +16,6 @@ export const receiveAllCandidate = candidates => ({
 
 export const addCandidate = candidate => dispatch => {
     APIUtil.addCandidate(candidate).then(res =>{
-        console.log(res.data.candidate)
         dispatch(receiveCandidate(res.data.candidate));
         dispatch(closeModal());
     }).catch(err =>{
@@ -24,9 +23,8 @@ export const addCandidate = candidate => dispatch => {
     })
 }
 
-export const fetchCandidates = () => dispatch => {
-    APIUtil.fetchCandidates().then(res =>{
-        console.log(res.data.candidates)
+export const getCandidates = () => dispatch => {
+    APIUtil.getCandidates().then(res =>{
         dispatch(receiveAllCandidate(res.data.candidates));
     }).catch(err =>{
         dispatch(receiveErrors(err))

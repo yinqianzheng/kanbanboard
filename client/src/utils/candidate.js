@@ -4,7 +4,7 @@ export const addCandidate = candidateData => {
   return axios.post("/candidates/add", candidateData);
 };
 
-export const fetchCandidates = () => {
+export const getCandidates = () => {
   return axios.post("/candidates/fetch");
 }
 

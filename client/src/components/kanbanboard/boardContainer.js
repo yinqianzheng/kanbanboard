@@ -1,5 +1,5 @@
 import Board from './board';
-import { fetchCandidates} from "../../actions/candidateActions"
+import { getCandidates} from "../../actions/candidateActions"
 import { connect } from "react-redux";
 import Candidate from "../candidate/candidate";
 
@@ -26,7 +26,7 @@ const mSTP = state => ({
 });
 
 const mDTP = dispatch => ({
-    fetchCandidate: () => dispatch(fetchCandidates())
+    getCandidate: () => dispatch(getCandidates())
 });
 
 export default connect(mSTP, mDTP)(Board);

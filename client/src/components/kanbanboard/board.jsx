@@ -2,9 +2,9 @@ import React, {useEffect} from "react";
 import DndDropBox from "./dndDropBoxContainer";
 import "./board.css";
 
-export default function Board({candidates, fetchCandidate}){
+export default function Board({candidates, getCandidate}){
     useEffect(()=>{
-        fetchCandidate();
+        getCandidate();
     }, []);
 
     return(
