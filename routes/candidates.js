@@ -5,14 +5,15 @@ const fs = require('fs');
 const path = require("path");
 const rimraf = require("rimraf");
 const uploadFile = require("../utils/uploadFile");
+const validateAddCandidateInput = require("../validation/addCandidate");
 
 router.post("/add", fileupload(), (req, res) => {
-    const errors = {};
+    const {errors, isValid} = validateAddCandidateInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
     const {name, email, phoneNum} = req.body;
-    
-
     Candidate.findOne({ email: req.body.email }).then(candidate => {
-      const errors = {};
       if (candidate) {
         errors.email = "Email already exists";
         return res.status(401).json(errors);
@@ -35,6 +36,9 @@ router.post("/add", fileupload(), (req, res) => {
                 });
             
           })
+        }else{
+          errors.resume = "Please upload the resume!";
+          return res.status(444).json(errors);
         }
       }
     });

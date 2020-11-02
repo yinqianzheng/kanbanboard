@@ -3,9 +3,9 @@
 }
 
 .show {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal {
@@ -38,4 +38,9 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.modal .session-main {
+  border: none;
+  box-shadow: none;
 }

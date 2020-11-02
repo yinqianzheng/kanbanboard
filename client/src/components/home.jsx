@@ -7,11 +7,17 @@ export default function Home({email, logout, openModal}){
     return(
         <>  
             <Modal/>
-            <div>Hello {email.match(/[^@]+/)}</div>
-            <button onClick={logout}>Logout</button>
-            <button onClick={()=>openModal({type: "recruiterFrom"})}>Add Recruiter</button>
-            <button onClick={()=>openModal({type: "candidateForm"})}>Add Candidate</button>
-            <Kanbanboard />
+            <div className="nav-top">
+                <div>Hello {email.match(/[^@]+/)}</div>
+                <div>
+                    <button className="btn" onClick={()=>openModal({type: "recruiterFrom"})}>Add Recruiter</button>
+                    <button className="btn" onClick={logout}>Logout</button>
+                </div>
+            </div>
+            <div className="block kanbanboard-container">
+                <button className="form-btn btn" onClick={()=>openModal({type: "candidateForm"})}>Add Candidate</button>
+                <Kanbanboard />
+            </div>
         </>
     )
 }

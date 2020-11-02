@@ -44,24 +44,19 @@ class CandidateForm extends React.Component {
         </div> 
       ); 
     } else { 
-      return ( 
-        <div> 
-          Please upload the resume!
-        </div> 
-      ); 
+      return null;
     } 
   }; 
 
   handleAddCandidate(e) {
-    e.preventDefault();
-
-    const formData = new FormData(); 
     const { email, name, phoneNum, resume} = this.state;
+    e.preventDefault();
+    const formData = new FormData(); 
     formData.append("resume", resume); 
     formData.append("email", email); 
     formData.append("name", name); 
     formData.append("phoneNum", phoneNum); 
-  
+    
     this.props.clearErrors();
     this.props.addCandidate(formData);
   }
@@ -76,12 +71,12 @@ class CandidateForm extends React.Component {
 
 
   showErrors() {
-    if (this.props.errors.message) {
+    if (this.props.errors && this.props.errors.message) {
       return (
         <ul className="session-errors-ul">
             {Object.values(this.props.errors.response.data).map((error, idx) => <li className="session-errors-li" key={idx}>{error}</li>)}
         </ul>
-      );
+      )
     } else {
       return null;
     }
@@ -128,6 +123,7 @@ class CandidateForm extends React.Component {
             </label>
           </div> 
           {this.fileData()} 
+          {this.showErrors()}
           <div className="session-button">
             <button className="submit-button" onClick={this.handleAddCandidate}>
               Add
@@ -138,10 +134,13 @@ class CandidateForm extends React.Component {
   }
 }
 
+const mSTP = state => ({
+  errors: state.errors.session
+})
 
 const mDTP = dispatch => ({
     addCandidate: user => dispatch(addCandidate(user)),
     clearErrors: () => dispatch(clearErrors())
 });
 
-export default connect(null, mDTP)(CandidateForm)
+export default connect(mSTP, mDTP)(CandidateForm)

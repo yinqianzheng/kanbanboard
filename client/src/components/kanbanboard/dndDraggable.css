@@ -1,5 +1,12 @@
 .dnd-draggable {
-  border: 1px solid black;
   width: 100%;
   min-height: 50px;
+  background-color: #fff;
+  border: 1px solid rgb(201, 201, 201);
+  box-shadow: 0 3px 2px -2px rgba(121, 121, 121, 0.2);
+  margin: 5px 0;
+}
+
+.dnd-draggable:hover {
+  box-shadow: 1px 2px 1px 2px rgb(219, 219, 175);
 }

@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import "./dndDropBox.css"
 import Draggable from "./dndDraggable";
 
 export default function DndDropBox({title, items, afterDrop}){
+    const [isDragOver, setIsDragOver] = useState(false);
+
     const allowDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -34,9 +36,9 @@ export default function DndDropBox({title, items, afterDrop}){
     }
 
     return(
-        <div className="dnd-drop-box">
+        <div className={`dnd-drop-box ${title.split(" ").join("").toLowerCase()}`}>
             <div className="dnd-title">{title}</div>
-            <div className="dnd-drop-container" onDrop={drop} onDragOver={allowDrop}>
+            <div className={`dnd-drop-container ${isDragOver?"drag-over": ""}`} onDrop={drop} onDragOver={allowDrop} >
                 {renderItems()}
             </div>
         </div>

@@ -8,14 +8,14 @@
   min-height: 150px;
 }
 
-.comment-content {
-  margin-bottom: 30px;
-  max-height: 500px;
+.detail-container {
+  max-height: 600px;
   overflow: scroll;
 }
 
-.detail-container {
-  max-height: 600px;
+.comment-content {
+  margin-bottom: 30px;
+  max-height: 500px;
   overflow: scroll;
 }
 
@@ -23,4 +23,9 @@
   list-style-type: none;
   margin-top: 5px;
   padding-left: 10px;
+}
+
+.detail-title {
+  text-align: center;
+  font-size: 20px;
 }

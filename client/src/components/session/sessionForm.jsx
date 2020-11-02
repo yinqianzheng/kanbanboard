@@ -1,4 +1,5 @@
 import React from "react";
+import "./session.css";
 
 export default class SessionForm extends React.Component {
   constructor(props) {
@@ -42,10 +43,10 @@ export default class SessionForm extends React.Component {
   render() {
     return (
       <div className="session-main">
+          <div className="form-title">{this.props.type === "Add"? "Add Recruiter" : this.props.type}</div>
           <div className="session-input-fields">
             <label>
               Email:
-              <br />
               <input
                 type="email"
                 value={this.state.email}
@@ -53,10 +54,8 @@ export default class SessionForm extends React.Component {
                 placeholder="Email"
               />
             </label>
-            <br />
             <label>
               Password:
-              <br />
               <input
                 type="password"
                 value={this.state.password}
@@ -65,9 +64,7 @@ export default class SessionForm extends React.Component {
               />
             </label>
           </div>
-          <br />
           {this.showErrors()}
-          <br />
           <div className="session-button">
             <button className="submit-button" onClick={this.handleSubmit}>
               {this.props.type}

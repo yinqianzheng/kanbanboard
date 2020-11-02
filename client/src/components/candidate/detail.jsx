@@ -52,6 +52,7 @@ function InfoBox({info, email, update}){
     return(
         <div className="detail-container">
             <div className="candidate-detail" >
+                <div className="detail-title">{`Process: ${info.process}`}</div>
                 <div><label>Name: {info.name}</label></div>
                 <div><label>email: {info.email}</label></div>
                 <div><label>Phone Number: {info.phoneNum}</label></div>
@@ -60,6 +61,7 @@ function InfoBox({info, email, update}){
                 <div><StarRating rate={rating} updateRating={handleRating} /></div>
                 
             </div>
+            <br/>
             <div className="comment-content">
                 <div>Comments:</div>
                 {renderComments()}

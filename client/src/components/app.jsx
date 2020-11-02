@@ -3,6 +3,7 @@ import { Switch } from "react-router-dom";
 import LoginForm from "./session/loginFormContainer";
 import Home from "./homeContainer"
 import { AuthRoute, ProtectedRoute } from "../utils/route";
+import "./main.css"
 
 const App = () => (
   <div className="app-main">
