@@ -13,7 +13,7 @@ const processCandidateData = (candidates) => {
         rejected: []
     };
     candidates.forEach(candidate => {
-        map[candidate.process].push({
+        map[candidate.process] && map[candidate.process].push({
             id: candidate._id,
             component: <Candidate info={candidate} />
         });

@@ -45,6 +45,9 @@ router.post("/login", (req, res) => {
           return res.status(401).json(errors);
         }
       });
+    }).catch(err => {
+        errors.database = "Unable to log in right now, Please try later!";
+        res.status(503).json(errors);
     });
   });
 
@@ -86,7 +89,10 @@ router.post("/addUser", (req, res) => {
           });
         });
       }
-    });
+    }).catch(err => {
+      errors.database = "Failed to update, Please try later!";
+      res.status(503).json(errors);
+  });
 });
 
 module.exports = router;
