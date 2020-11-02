@@ -43,11 +43,11 @@ router.post("/add", fileupload(), (req, res) => {
 
 router.get("/fetch", (req, res) => {
   Candidate.find().then(candidates => {
-    res.json(candidates);
+    return res.json(candidates);
   }).catch(err => {
     const errors = {};
     errors.internal = "Failed to fetch candidates, Please try later!";
-    res.status(500).json(errors);
+    return res.status(500).json(errors);
   });
 });
 
