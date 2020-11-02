@@ -41,7 +41,7 @@ router.post("/add", fileupload(), (req, res) => {
     });
 });
 
-router.get("/fetch", (req, res) => {
+router.post("/fetch", (req, res) => {
   Candidate.find().then(candidates => {
     return res.json({candidates});
   }).catch(err => {
