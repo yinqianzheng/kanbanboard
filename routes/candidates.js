@@ -1,9 +1,6 @@
 const router = require("express").Router();
 const Candidate = require("../models/Candidate");
 const fileupload = require("express-fileupload");
-const fs = require('fs');
-const path = require("path");
-const rimraf = require("rimraf");
 const uploadFile = require("../utils/uploadFile");
 const validateAddCandidateInput = require("../validation/addCandidate");
 
