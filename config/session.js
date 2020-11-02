@@ -1,3 +1,3 @@
 module.exports = {
-    timeToLive: 5
+    timeToLive: 15
 }

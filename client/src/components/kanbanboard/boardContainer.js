@@ -26,7 +26,7 @@ const mSTP = state => ({
 });
 
 const mDTP = dispatch => ({
-    fetch: () => dispatch(fetchCandidates())
+    fetchCandidate: () => dispatch(fetchCandidates())
 });
 
 export default connect(mSTP, mDTP)(Board);
