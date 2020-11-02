@@ -25,6 +25,7 @@ export const addCandidate = candidate => dispatch => {
 
 export const fetchCandidates = () => dispatch => {
     APIUtil.fetchCandidates().then(res =>{
+        console.log(res.data)
         dispatch(receiveAllCandidate(res.data));
     }).catch(err =>{
         dispatch(receiveErrors(err))

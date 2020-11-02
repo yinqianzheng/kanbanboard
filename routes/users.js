@@ -35,7 +35,7 @@ router.post("/login", (req, res) => {
       bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
           signJwt(user, (err, token) => {
-            res.json({
+            return res.json({
               success: true,
               token: "Bearer " + token
             });
@@ -47,7 +47,7 @@ router.post("/login", (req, res) => {
       });
     }).catch(err => {
         errors.database = "Unable to log in right now, Please try later!";
-        res.status(503).json(errors);
+        return res.status(503).json(errors);
     });
   });
 
@@ -70,28 +70,28 @@ router.post("/addUser", (req, res) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) {
               errors.internal = "Failed to add the user, Please try later!";
-              res.status(500).json(errors);
+              return res.status(500).json(errors);
               throw err;
             }
             newUser.password = hash;
             newUser
               .save()
               .then(user => {
-                res.json({
+                return res.json({
                   success: true,
                   email: req.body.email
                 });
               })
               .catch(err => {
                 errors.internal = "Failed to add the user, Please try later!";
-                res.status(444).json(errors);
+                return res.status(444).json(errors);
               });
           });
         });
       }
     }).catch(err => {
       errors.database = "Failed to update, Please try later!";
-      res.status(503).json(errors);
+      return res.status(503).json(errors);
   });
 });
 
