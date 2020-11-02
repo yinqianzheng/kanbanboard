@@ -26,7 +26,7 @@ router.post("/add", fileupload(), (req, res) => {
             newCandidate
                 .save()
                 .then(candidate => {
-                  return res.json(candidate);
+                  return res.json({candidate});
                 }).catch(err => {
                     errors.internal = "Failed to add a new candidate, Please try later!";
                     return res.status(444).json(errors);
@@ -43,7 +43,7 @@ router.post("/add", fileupload(), (req, res) => {
 
 router.get("/fetch", (req, res) => {
   Candidate.find().then(candidates => {
-    return res.json(candidates);
+    return res.json({candidates});
   }).catch(err => {
     const errors = {};
     errors.internal = "Failed to fetch candidates, Please try later!";
